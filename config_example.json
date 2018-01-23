@@ -1,0 +1,35 @@
+{
+  "mqttconnections": {
+    "ttn_device": {
+      "server": "asia-se.thethings.network",
+      "port": 1883,
+      "username": "myusername",
+      "password": "mypassword",
+      "topic": "myproject/devices/somedevice/up"
+    }
+  },
+  "widgets": [
+    {
+      "title": "Polytunnel Temperature",
+      "type": "linegraph",
+      "datasource": "mqttsub",
+      "connection": "ttn_device",
+      "field": "temp",
+      "limit": 504, "":"504 = 3 * 24 * 7 (1 week of 20-minute samples)"
+    },
+    {
+      "title": "Polytunnel Sensor Voltage",
+      "type": "linegraph",
+      "datasource": "mqttsub",
+      "connection": "ttn_device",
+      "field": "voltage",
+      "limit": 504,
+      "max": 4.8,
+      "min": 3.5
+    },
+    {
+      "type": "button",
+      "action": "lora"
+    }
+  ]
+}

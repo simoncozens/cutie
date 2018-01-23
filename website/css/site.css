@@ -1,0 +1,16 @@
+.title {
+  font-family: "Arial", sans-serif;
+  color: #66f;
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+}
+
+.widget {
+  width: 330px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #eef;
+  margin:30px;
+  display: inline-block;
+}
