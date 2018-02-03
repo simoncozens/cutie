@@ -1,13 +1,15 @@
 var data = [];
 var config = {};
-var ws = new WebSocket("ws://localhost:9090");
+var ws = new WebSocket("ws://"+document.location.hostname+":9090");
 
 var addLineGraph = function (widget, d, wconfig) {
   var gElem = $("<div>")
   gElem.addClass("graph")
   gData = []
   d.forEach(function(el) {
-    gData.push({x: new Date(el.timestamp).getTime()/1000, y: el.value })
+    if (el.value != 0 || !wconfig.ignore_zeros) {
+      gData.push({x: new Date(el.timestamp).getTime()/1000, y: el.value })
+    }
   })
   var graph = new Rickshaw.Graph( {
     element: gElem[0],
@@ -32,6 +34,11 @@ var addLineGraph = function (widget, d, wconfig) {
   yAxis.render();
   widget.append(gElem);
 }
+
+var addButton = function(widget, d, wconfig) {
+  var butt = $('<br/><div><label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>')
+  widget.append(butt)
+}
 var redrawScreen = function() {
   $("#widgets").empty()
   config.widgets.forEach(function (w,i) {
@@ -39,6 +46,7 @@ var redrawScreen = function() {
     wHtml.addClass("widget");
     wHtml.append('<span class="title">'+w.title+"</span>")
     if(w.type=="linegraph") { addLineGraph(wHtml, data[i],w) }
+    if(w.type=="button") { addButton(wHtml, data[i],w) }
     $("#widgets").append(wHtml);
   })
 }
