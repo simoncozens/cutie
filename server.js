@@ -23,6 +23,9 @@ auxiliary.requireDirectory("datasources")
 // Load widget handlers
 widgethandlers = {}
 auxiliary.requireDirectory("widgethandlers")
+// Load alerters
+alerters = {}
+auxiliary.requireDirectory("alerters")
 
 // Data
 var data = storage.getItemSync('data') || []
@@ -47,6 +50,9 @@ app.set('views', __dirname + '/website');
 // Align datasources with widgets
 for (const [key,ds] of Object.entries(datasources)) {
   ds.init();
+}
+for (const [key,alerter] of Object.entries(alerters)) {
+  alerter.init();
 }
 
 app.get('/', function (req, res) {
