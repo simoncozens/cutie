@@ -35,8 +35,11 @@ var addLineGraph = function (widget, d, wconfig) {
   widget.append(gElem);
 }
 
-var addButton = function(widget, d, wconfig) {
-  var butt = $('<br/><div><label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>')
+var addButton = function(widget, i, wconfig) {
+  var butt = $('<br/><button>'+wconfig.title+'</button>')
+  butt.click(function() {
+    ws.send("button "+i);
+  })
   widget.append(butt)
 }
 var redrawScreen = function() {
@@ -46,7 +49,7 @@ var redrawScreen = function() {
     wHtml.addClass("widget");
     wHtml.append('<span class="title">'+w.title+"</span>")
     if(w.type=="linegraph") { addLineGraph(wHtml, data[i],w) }
-    if(w.type=="button") { addButton(wHtml, data[i],w) }
+    if(w.type=="button") { addButton(wHtml, i, w) }
     $("#widgets").append(wHtml);
   })
 }

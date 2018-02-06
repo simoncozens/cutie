@@ -17,15 +17,10 @@ require("./aux");
 
 const bodyParser= require('body-parser')
 
-// Load data sources
-datasources = {}
-auxiliary.requireDirectory("datasources")
-// Load widget handlers
-widgethandlers = {}
-auxiliary.requireDirectory("widgethandlers")
-// Load alerters
-alerters = {}
-auxiliary.requireDirectory("alerters")
+datasources = {};    auxiliary.requireDirectory("datasources")
+widgethandlers = {}; auxiliary.requireDirectory("widgethandlers")
+alerters = {};       auxiliary.requireDirectory("alerters")
+actions = {};        auxiliary.requireDirectory("actions")
 
 // Data
 var data = storage.getItemSync('data') || []
@@ -65,6 +60,8 @@ wss.on('connection', function connection(ws, req) {
       ws.send(JSON.stringify({"type": "data", "data": cutie.data}));
     } else if (message == "Send me config!") {
       ws.send(JSON.stringify({"type": "config", "config": cutie.config}));
+    } else if (match = message.match(/button (\d+)/)) {
+      auxiliary.triggerAction(match[1])
     }
   });
 });

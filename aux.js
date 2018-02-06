@@ -42,5 +42,12 @@ auxiliary = {
       client.send(JSON.stringify(msg));
       client.send(JSON.stringify({"type": "data", "data": cutie.data}));
     })
+  },
+  "triggerAction": function(i) {
+    var w = cutie.config.widgets[i]
+    if (w.action in actions) {
+      actions[w.action].fire(w);
+      auxiliary.log("Firing action for widget "+widget.title)
+    }
   }
 };

@@ -15,7 +15,31 @@
   margin:30px;
   display: inline-block;
 }
+path.area {
+  fill-opacity: 0.2;
+}
 
+button {
+  width: 90%;
+  height: 90%;
+  color: white;
+  text-decoration: none;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 25px;
+  text-align: center;
+  padding: 0 30px;
+  line-height: 30px;
+  display: inline-block;
+  position: relative;
+  border-radius: 20px;
+  background-image: linear-gradient(#aaf 25%, #22324c 75%);
+  box-shadow: inset 0px 0px 15px #fff;
+  transition: color 1s, background-image 1s, ease-in-out;
+}
+button:active {
+  background-image: linear-gradient(#e1ccda 49%, #e6b4c5 51%);
+  color: #ff324c;
+}
 /* The switch - the box around the slider */
 .switch {
   display: table-cell;
