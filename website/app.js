@@ -27,9 +27,17 @@ var addLineGraph = function (widget, d, wconfig) {
       }
     ]
   } );
-  var x_axis = new Rickshaw.Graph.Axis.Time({graph: graph});
+  var x_axis = new Rickshaw.Graph.Axis.Time({
+    graph: graph,
+    timeFixture: new Rickshaw.Fixtures.Time.Local()
+  });
   var yAxis = new Rickshaw.Graph.Axis.Y({graph: graph });
-  var hoverDetail = new Rickshaw.Graph.HoverDetail( {graph: graph } );
+  var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: graph,
+    xFormatter: function(x) {
+            return new Date( x * 1000 ).toLocaleString();
+                }
+  });
   graph.render();
   x_axis.render();
   yAxis.render();
