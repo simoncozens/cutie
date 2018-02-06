@@ -5,7 +5,11 @@
   font-size: 12px;
   text-align: center;
 }
-
+#widgets{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
 .widget {
   width: 330px;
   height: 240px;

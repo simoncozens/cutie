@@ -13,7 +13,8 @@ var addLineGraph = function (widget, d, wconfig) {
   })
   var graph = new Rickshaw.Graph( {
     element: gElem[0],
-    renderer: "line",
+    renderer: "area",
+    stroke: true,
     width: 320,
     height: 200,
     max: wconfig.max,
