@@ -57,7 +57,7 @@ var redrawScreen = function() {
 ws.onmessage = function(evt) {
    msg = JSON.parse(evt.data)
    if (msg.type == "log") {
-     $("#log").html($("#log").html()+msg.timestamp+" : "+msg.message+"\n");
+     $("#log").html(msg.timestamp+" : "+msg.message+"\n"+$("#log").html());
    } else if (msg.type == "config") {
     config = msg.config;
    } else if (msg.type == "data") {

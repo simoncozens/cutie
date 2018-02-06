@@ -47,7 +47,7 @@ auxiliary = {
     var w = cutie.config.widgets[i]
     if (w.action in actions) {
       actions[w.action].fire(w);
-      auxiliary.log("Firing action for widget "+widget.title)
+      auxiliary.log("Firing action for widget "+w.title)
     }
   }
 };

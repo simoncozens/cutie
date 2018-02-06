@@ -1,3 +1,8 @@
+#log {
+  height: 200px;
+  overflow: scroll;
+  border: 1px solid black;
+}
 .title {
   font-family: "Arial", sans-serif;
   color: #66f;

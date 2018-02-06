@@ -6,7 +6,6 @@ datasources["mqttsub"] = {
     if (!("mqttconnections" in cutie.config)) return;
     // Establish connections
     for ([key, connection] of Object.entries(cutie.config.mqttconnections)) {
-      console.log("Connecting to "+JSON.stringify(connection))
       clients[key] = mqtt.connect({
           "servers":[{
             "host": connection.server,
