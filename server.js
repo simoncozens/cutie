@@ -24,12 +24,14 @@ actions = {};        auxiliary.requireDirectory("actions")
 
 // Data
 var data = storage.getItemSync('data') || []
+var rateLimits = storage.getItemSync('rateLimits') || {}
 
 global.cutie =  {
   "data": data,
   "wss": wss,
   "config": config,
-  "storage": storage
+  "storage": storage,
+  "rateLimits": rateLimits
 }
 
 var mustacheExpress = require('mustache-express');
@@ -68,4 +70,5 @@ wss.on('connection', function connection(ws, req) {
 
 app.use(express.static('website'))
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+var port = cutie.config.port || 3000
+app.listen(port, () => console.log(`Cutie server listening on port ${port}`))

@@ -24,6 +24,15 @@ auxiliary = {
     cutie.storage.setItemSync('data',cutie.data)
     auxiliary.log("New message on widget "+i+": "+JSON.stringify(message))
   },
+  "rateLimit": function(id, val) {
+    var now = (new Date).getTime() / 1000
+    if (!(id in cutie.rateLimits) || cutie.rateLimits[id] + val < now) {
+      cutie.rateLimits[id] = now
+      cutie.storage.setItemSync("rateLimits", cutie.rateLimits)
+      return true
+    }
+    return false
+  },
   "checkForAlert": function (message, widget, alert) {
     var value = message.value
     if (!(alert.alerter in alerters)) {
@@ -33,6 +42,11 @@ auxiliary = {
     if (eval(alert.condition)) { // HERE BE DRAGONS
       var alertMess = Mustache.render(alert.message, message)
       var driver = alerters[alert.alerter]
+      if (rateLimit in alert) {
+        if (!auxiliary.rateLimit(alert.id, alert.rateLimit)) {
+          return
+        }
+      }
       driver.sendAlert(alert, alertMess)
     }
   },
