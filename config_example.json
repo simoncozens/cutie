@@ -1,35 +1,83 @@
 {
+  "port": 80, "": "Defaults to 3000",
+
   "mqttconnections": {
-    "ttn_device": {
+    "ttn_device1": {
       "server": "asia-se.thethings.network",
       "port": 1883,
       "username": "myusername",
       "password": "mypassword",
-      "topic": "myproject/devices/somedevice/up"
+      "topic": "myproject/devices/somedevice1/up"
+    },
+    "ttn_device2": {
+      "server": "asia-se.thethings.network",
+      "port": 1883,
+      "username": "myusername",
+      "password": "mypassword",
+      "topic": "myproject/devices/somedevice2/up"
     }
   },
+
+  "alerters": {
+    "twilio": {
+      "driver": "twilio",
+      "accountSid": "abcdef1234567890987654321",
+      "authToken": "abcdef1234567890987654321",
+      "from": "+614xxxxxxxx",
+      "to": "+614xxxxxxxx"
+    }
+  },
+
   "widgets": [
     {
       "title": "Polytunnel Temperature",
       "type": "linegraph",
       "datasource": "mqttsub",
-      "connection": "ttn_device",
+      "connection": "ttn_device1",
       "field": "temp",
-      "limit": 504, "":"504 = 3 * 24 * 7 (1 week of 20-minute samples)"
+      "limit": 504, "":"504 = 3 * 24 * 7 (1 week of 20-minute samples)",
+      "ignore_zeros": true,
+      "min": "auto",
+      "alerts": [
+        {
+          "condition": "value < 4",
+          "alerter": "twilio",
+          "message": "Polytunnel temperature {{value}}!",
+          "rateLimit": 3600,
+          "id": "gtsms"
+        }
+      ]
     },
     {
       "title": "Polytunnel Sensor Voltage",
       "type": "linegraph",
       "datasource": "mqttsub",
-      "connection": "ttn_device",
+      "connection": "ttn_device1",
       "field": "voltage",
       "limit": 504,
       "max": 4.8,
-      "min": 3.5
+      "min": 3.5,
+      "alerts": [
+        {
+          "condition": "value < 3.5",
+          "alerter": "twilio",
+          "message": "Battery low on temperature sensor!",
+          "rateLimit": 3600,
+          "id": "gtbatsms"
+        }
+      ]
     },
     {
+      "title": "Pump on",
       "type": "button",
-      "action": "lora"
+      "action": "command",
+      "command": "./pump_client 1"
+    },
+    {
+      "title": "Pump off",
+      "type": "button",
+      "action": "command",
+      "command": "./pump_client 0"
     }
   ]
 }
