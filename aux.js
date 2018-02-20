@@ -20,7 +20,7 @@ auxiliary = {
     cutie.data[i].push(message)
     var limit = 100
     if ("limit" in widget) { limit = widget.limit }
-    cutie.data[i].slice(-limit)
+    cutie.data[i] = cutie.data[i].slice(-limit)
     cutie.storage.setItemSync('data',cutie.data)
     auxiliary.log("New message on widget "+i+": "+JSON.stringify(message))
   },
